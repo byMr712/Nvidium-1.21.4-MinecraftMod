@@ -1,8 +1,46 @@
-# Nvidium
+> **Language:** Русский · [English](README.en.md)
 
-[![Modrinth](https://img.shields.io/modrinth/dt/nvidium?logo=modrinth)](https://modrinth.com/mod/nvidium)
+# Nvidium (Minecraft 1.21.4 Fabric Port)
 
-Nvidium is an alternate rendering backing for sodium, it uses cutting edge nvidia features to render huge amounts of
-terrain geometry at very playable framerates.
+Порт и обновление мода **Nvidium** для **Minecraft 1.21.4 (Fabric)** от **byMr712**.
 
-### Requires sodium and an nvidia gtx 1600 series or newer to run (turing+ architecture)
+Источник: [GitHub: MCRcortex/nvidium](https://github.com/MCRcortex/nvidium).
+
+---
+
+## О моде
+
+**Nvidium** — альтернативный движок рендеринга для **Sodium**, использующий аппаратные возможности видеокарт NVIDIA (архитектура Turing и новее) для отрисовки больших объёмов геометрии мира при очень высоком FPS.
+
+### Требования:
+- Minecraft 1.21.4 (Fabric Loader)
+- Sodium 0.6.13
+- Видеокарта NVIDIA GeForce GTX 1600 серия или новее (архитектура Turing+)
+
+---
+
+## Что изменено в порте для 1.21.4 (byMr712)
+
+- Полная сборка и адаптация под Minecraft 1.21.4 (Fabric Loader, Java 21) на официальных маппингах Mojang с Parchment.
+- Исправлен полупрозрачный рендер: сортировка кадров translucency, устранена отрисовка проходов при телепортации, исправлен подсчёт квадов сортировки.
+- Исправлена сортировка секций (sections) и целочисленное переполнение идентификаторов секций при инициализации RenderSection.
+- Исправлен рендер маяков (beacons).
+- UV перенесены во фрагментный шейдер через vertex pulling, альтернативная реализация тумана.
+- Версия: **0.4.1-beta9-1.21.4**.
+
+---
+
+## Сборка и установка
+
+1. Требуется **Java 21** и **Fabric Loader** для Minecraft 1.21.4.
+2. Для сборки из исходников запустите:
+   ```bash
+   ./gradlew build
+   ```
+3. Собранный jar-файл находится в `build/libs/nvidium-0.4.1-beta9-1.21.4.jar`.
+
+---
+
+## Лицензия
+
+Распространяется под лицензией **LGPL-3.0**. Подробности в файле [LICENSE.txt](LICENSE.txt).
