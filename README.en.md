@@ -38,13 +38,12 @@ Source: [GitHub: MCRcortex/nvidium](https://github.com/MCRcortex/nvidium).
 
 ---
 
-## Changes in 1.21.4 Port (byMr712)
+## Changes in Build (byMr712)
 
-- Complete build and adaptation for **Minecraft 1.21.4** (Fabric Loader, Java 21) using official Mojang mappings with Parchment.
-- **Fixed translucency rendering**: translucency frame sorting, fixed pass drawing during teleports, corrected sorting quad count.
-- **Fixed section sorting**: eliminated integer overflow issues on section IDs during `RenderSection` initialization.
-- **Fixed beacon beam rendering**.
-- Moved UV coordinates to fragment shader via vertex pulling, optimized fog implementation.
+- **Fixed OpenGL state leaks on reconnect**: resolved black entities, black REI GUI items, and player model translucency bugs on server reconnect or world reload (added proper cleanup and reset of texture slots, samplers, UBO ranges, and shader programs).
+- **Blaze3D cache synchronization**: replaced direct `glBindTextureUnit` calls with `GlStateManager` to prevent texture slot desynchronization with the game engine.
+- **Pipeline state cleanup**: ensured all active shader programs (`glUseProgram(0)`) and buffers are cleanly unbound after rendering passes and on pipeline destruction (`RenderPipeline.delete()`).
+- **Build script**: added `build.bat` quick build script.
 
 ---
 
@@ -65,12 +64,13 @@ Source: [GitHub: MCRcortex/nvidium](https://github.com/MCRcortex/nvidium).
    ```bash
    ./gradlew build
    ```
-3. The built jar file will be located at `build/libs/nvidium-0.4.1-beta9-1.21.4.jar`.
+3. The built jar file will be located at `build/libs/Nvidium-1.21.4-byMr712.jar`.
 
 ---
 
 ## Credits & License
 
 - Original Author: [MCRcortex](https://github.com/MCRcortex) ([nvidium](https://github.com/MCRcortex/nvidium)).
-- Build and adaptation for 1.21.4 by: [Mr712](https://github.com/byMr712).
+- Port to 1.21.4: [drouarb](https://github.com/drouarb) ([Shays-Forks/nvidium](https://github.com/Shays-Forks/nvidium/tree/1.21.4)).
+- Fixes and build: [Mr712](https://github.com/byMr712).
 - Distributed under the [LGPL 3.0 License](LICENSE.txt).

@@ -36,26 +36,32 @@ public class TemporalTerrainRasterizer extends Phase {
         GL45C.glSamplerParameteri(lightSampler, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     }
 
+    private static void setTexture(int textureId, int bindingPoint) {
+        com.mojang.blaze3d.platform.GlStateManager._activeTexture(33984 + bindingPoint);
+        com.mojang.blaze3d.platform.GlStateManager._bindTexture(textureId);
+    }
+
     public void raster(int regionCount, long commandAddr) {
         shader.bind();
 
         int blockId = Minecraft.getInstance().getTextureManager().getTexture(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/atlas/blocks.png")).getId();
         int lightId = ((LightTextureAccessor)Minecraft.getInstance().gameRenderer.lightTexture()).getTarget().getColorTextureId();
 
-        GL45C.glBindTextureUnit(0, blockId);
         GL45C.glBindSampler(0, blockSampler);
-
-        GL45C.glBindTextureUnit(1, lightId);
         GL45C.glBindSampler(1, lightSampler);
-
-
+        setTexture(blockId, 0);
+        setTexture(lightId, 1);
 
         glBufferAddressRangeNV(GL_DRAW_INDIRECT_ADDRESS_NV, 0, commandAddr, regionCount*8L);//Bind the command buffer
         glMultiDrawMeshTasksIndirectNV( 0, regionCount, 0);
 
-
+        glBufferAddressRangeNV(GL_DRAW_INDIRECT_ADDRESS_NV, 0, 0, 0);
         GL45C.glBindSampler(0, 0);
         GL45C.glBindSampler(1, 0);
+        setTexture(0, 1);
+        setTexture(0, 0);
+        com.mojang.blaze3d.platform.GlStateManager._activeTexture(33984);
+        GL45C.glUseProgram(0);
     }
 
     public void delete() {

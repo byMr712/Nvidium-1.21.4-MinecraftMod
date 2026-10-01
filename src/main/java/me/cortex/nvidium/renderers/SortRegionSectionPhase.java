@@ -18,6 +18,7 @@ public class SortRegionSectionPhase extends Phase {
     public void dispatch(int sortingRegionCount) {
         shader.bind();
         glDispatchCompute(sortingRegionCount, 1, 1);
+        org.lwjgl.opengl.GL20C.glUseProgram(0);
     }
 
     public void delete() {

@@ -17,6 +17,7 @@ public class SectionRasterizer extends Phase {
     public void raster(int regionCount) {
         shader.bind();
         glDrawMeshTasksNV(0,regionCount);
+        org.lwjgl.opengl.GL20C.glUseProgram(0);
     }
 
     public void delete() {

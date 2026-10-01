@@ -483,17 +483,15 @@ public class RenderPipeline {
             glColorMask(true, true, true, true);
         }
 
+        glBufferAddressRangeNV(GL_UNIFORM_BUFFER_ADDRESS_NV, 0, 0, 0);
         glDisableClientState(GL_UNIFORM_BUFFER_UNIFIED_NV);
         glDisableClientState(GL_VERTEX_ATTRIB_ARRAY_UNIFIED_NV);
         glDisableClientState(GL_ELEMENT_ARRAY_UNIFIED_NV);
         glDisableClientState(GL_DRAW_INDIRECT_UNIFIED_NV);
         glDepthFunc(GL11C.GL_LEQUAL);
         glDisable(GL_DEPTH_TEST);
-
-
-        //if ((err = glGetError()) != 0) {
-        //    throw new IllegalStateException("GLERROR: "+err);
-        //}
+        org.lwjgl.opengl.GL20C.glUseProgram(0);
+        GlStateManager._activeTexture(33984);
     }
 
     void enqueueRegionSort(int regionId) {
@@ -535,10 +533,13 @@ public class RenderPipeline {
             glDisable(GL_DEPTH_TEST);
         }
 
+        glBufferAddressRangeNV(GL_UNIFORM_BUFFER_ADDRESS_NV, 0, 0, 0);
         glDisableClientState(GL_UNIFORM_BUFFER_UNIFIED_NV);
         glDisableClientState(GL_VERTEX_ATTRIB_ARRAY_UNIFIED_NV);
         glDisableClientState(GL_ELEMENT_ARRAY_UNIFIED_NV);
         glDisableClientState(GL_DRAW_INDIRECT_UNIFIED_NV);
+        org.lwjgl.opengl.GL20C.glUseProgram(0);
+        GlStateManager._activeTexture(33984);
 
 
 
@@ -564,6 +565,20 @@ public class RenderPipeline {
     }
 
     public void delete() {
+        org.lwjgl.opengl.GL20C.glUseProgram(0);
+        glBufferAddressRangeNV(GL_UNIFORM_BUFFER_ADDRESS_NV, 0, 0, 0);
+        glBufferAddressRangeNV(GL_DRAW_INDIRECT_ADDRESS_NV, 0, 0, 0);
+        org.lwjgl.opengl.GL45C.glBindSampler(0, 0);
+        org.lwjgl.opengl.GL45C.glBindSampler(1, 0);
+        org.lwjgl.opengl.GL45C.glBindSampler(2, 0);
+        GlStateManager._activeTexture(33984 + 2);
+        GlStateManager._bindTexture(0);
+        GlStateManager._activeTexture(33984 + 1);
+        GlStateManager._bindTexture(0);
+        GlStateManager._activeTexture(33984 + 0);
+        GlStateManager._bindTexture(0);
+        GlStateManager._activeTexture(33984);
+
         regionVisibilityTracking.delete();
 
         sceneUniform.delete();

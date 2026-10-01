@@ -18,6 +18,7 @@ public class CmdBufferBuilder extends Phase {
     public void dispatch(int regionCount) {
         shader.bind();
         glDispatchCompute(regionCount, 1, 1);
+        org.lwjgl.opengl.GL20C.glUseProgram(0);
     }
 
     public void delete() {

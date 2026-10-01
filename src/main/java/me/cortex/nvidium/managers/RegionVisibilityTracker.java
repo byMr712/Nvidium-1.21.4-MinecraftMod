@@ -38,6 +38,7 @@ public class RegionVisibilityTracker {
         shader.bind();
         fram++;
         glDrawMeshTasksNV(0,regionCount);
+        org.lwjgl.opengl.GL20C.glUseProgram(0);
         glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
         downStream.download(regionVisibilityBuffer, 0, regionCount, ptr -> {
             for (int i = 0; i < regionMapping.length; i++) {

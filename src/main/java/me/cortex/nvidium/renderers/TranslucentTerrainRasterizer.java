@@ -64,8 +64,14 @@ public class TranslucentTerrainRasterizer extends Phase {
         frameTimeProfiler.startQuery();
         glMultiDrawMeshTasksIndirectNV( 0, regionCount, 0);
         frameTimeProfiler.endQuery();
+
+        glBufferAddressRangeNV(GL_DRAW_INDIRECT_ADDRESS_NV, 0, 0, 0);
         GL45C.glBindSampler(0, 0);
         GL45C.glBindSampler(1, 0);
+        setTexture(0, 1);
+        setTexture(0, 0);
+        GlStateManager._activeTexture(33984);
+        GL45C.glUseProgram(0);
     }
 
     public void delete() {
